@@ -1,7 +1,10 @@
-DROP DATABASE IF EXISTS cliente;
+DROP DATABASE IF EXISTS clientes;
 create database testefullstack;
 use cliente;
-create table clientes (clienteid integer primary key auto_increment, username varchar(50));
+CREATE TABLE clientes (id integer primary key auto_increment, clienteid CHAR(36) NOT NULL ,
+                       username VARCHAR(50));
 
-insert into clientes values(1, "cliente1");
-insert into clientes(username) values("cliente2");
+INSERT INTO clientes (clienteid, username) VALUES ('6fbb1d94-7d45-4f07-bf18-74b5a7a8cfde', 'Exemplo3');
+
+
+select * from clientes;
