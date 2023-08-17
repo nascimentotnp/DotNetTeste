@@ -6,7 +6,7 @@ using MySql.Data.MySqlClient;
 public class ClienteDataAccess
 {
     public static string conString = @"server=localhost; port=3306; user=root; password=root; database=testefullstack";
-    public static List<Cliente> GetAllUsers()
+    public static List<Cliente> GetAllCliente()
     {
         List<Cliente> allNotes = new List<Cliente>();
         MySqlConnection con = new MySqlConnection(conString);
@@ -25,7 +25,7 @@ public class ClienteDataAccess
             {
                 Cliente Cliente = new Cliente
                 {
-                    Clienteid = Guid.Parse(row["clienteid"].ToString()),      
+                    id = Guid.Parse(row["clienteid"].ToString()),      
                     username = row["username"].ToString(),
                 };
                 allNotes.Add(Cliente);
@@ -37,7 +37,7 @@ public class ClienteDataAccess
         }
         return allNotes;
     }
-    public static void SaveNewUser(Cliente Cliente)
+    public static void SaveNewCliente(Cliente cliente)
     {
         MySqlConnection con = new MySqlConnection(conString);
 
@@ -47,23 +47,9 @@ public class ClienteDataAccess
 
             Guid novoClienteId = Guid.NewGuid();
 
-            string query = $"SELECT COUNT(*) FROM clientes WHERE clienteid = @ClienteId";
-            using (MySqlCommand command = new MySqlCommand(query, con))
-            {
-                command.Parameters.AddWithValue("@ClienteId", novoClienteId);
-                int count = Convert.ToInt32(command.ExecuteScalar());
-
-                if (count == 0)
-                {
-                    string insertQuery = $"insert into clientes(clienteid, username) values('{novoClienteId}', '{Cliente.username}')";
-                    MySqlCommand insertCommand = new MySqlCommand(insertQuery, con);
-                    insertCommand.ExecuteNonQuery();
-                }
-                else
-                {
-                    Console.WriteLine("GUID já existe, gerando novo GUID...");
-                }
-            }
+            string insertQuery = $"insert into clientes(clienteid, username) values('{novoClienteId}', '{cliente.username}')";
+            MySqlCommand insertCommand = new MySqlCommand(insertQuery, con);
+            insertCommand.ExecuteNonQuery();
         }
         catch (Exception e)
         {
@@ -74,14 +60,15 @@ public class ClienteDataAccess
             con.Close();
         }
     }
-    public static void DeleteUserById(int id)
+
+    public static void DeleteClienteById(Guid id)
     {
         MySqlConnection con = new MySqlConnection(conString);
 
         try
         {
             con.Open();
-            string query = "delete from clientes where id =" + id;
+            string query = $"delete from clientes where clienteid ='{id}'";
             MySqlCommand command = new MySqlCommand(query, con);
             command.ExecuteNonQuery();
         }
@@ -94,14 +81,14 @@ public class ClienteDataAccess
             con.Close();
         }
     }
-    public static void UpdateUser(int id, Cliente cliente)
+    public static void UpdateCliente(Guid id, Cliente cliente)
     {
         MySqlConnection con = new MySqlConnection(conString);
 
         try
         {
             con.Open();
-            string query = $"update clientes set username='{cliente.username}' where id={id}";
+            string query = $"update clientes set username='{cliente.username}' where clienteid='{id}'";
             MySqlCommand command = new MySqlCommand(query, con);
             command.ExecuteNonQuery();
         }

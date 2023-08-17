@@ -2,13 +2,13 @@ using DotNetTestetec.DAL;
 using DotNetTestetec.Modal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Cors;
-namespace DotNetTestetec.Controllers;
+namespace ClienteController;
+
 
 [ApiController]
 [Route("api/[controller]")]
 public class ClienteController : ControllerBase
 {
-    
     private readonly ILogger<ClienteController> _logger;
 
     public ClienteController(ILogger<ClienteController> logger)
@@ -18,35 +18,35 @@ public class ClienteController : ControllerBase
 
     [HttpGet]
     [EnableCors()]
-    public IEnumerable<Cliente> GetAllUsers()
+    public IEnumerable<Cliente> GetAllCliente()
     {
-        List<Cliente> clientes = ClienteDataAccess.GetAllUsers();
-        return clientes;
+        List<Cliente> Cliente = ClienteDataAccess.GetAllCliente();
+        return Cliente;
     }
 
     [HttpPost]
     [EnableCors()]
-    public IActionResult InsertNewUser(Cliente cliente)
+    public IActionResult InsertNewCliente(Cliente Cliente)
     {
-        ClienteDataAccess.SaveNewUser(cliente);
-        return Ok(new { message = "User created" });
+        ClienteDataAccess.SaveNewCliente(Cliente);
+        return Ok(new { message = "Cliente created" });
     }
 
     [Route("{id}")]
     [HttpDelete]
     [EnableCors()]
-    public IActionResult DeleteOneUser(int id)
+    public IActionResult DeleteOneCliente(Guid id)
     {
-        ClienteDataAccess.DeleteUserById(id);
-        return Ok(new { message = "User deleted" });
+        ClienteDataAccess.DeleteClienteById(id);
+        return Ok(new { message = "Cliente deleted" });
     }
 
     [Route("{id}")]
     [HttpPut]
     [EnableCors()]
-    public IActionResult UpdateUser(int id, [FromBody] Cliente cliente)
+    public IActionResult UpdateCliente(Guid id, [FromBody] Cliente Cliente)
     {
-        ClienteDataAccess.UpdateUser(id, cliente);
-        return Ok(new { message = "User updated" });
+        ClienteDataAccess.UpdateCliente(id, Cliente);
+        return Ok(new { message = "Cliente updated" });
     }
 }

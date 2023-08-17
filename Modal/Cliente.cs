@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 public class Cliente
 {
-    public int id{ get; set;}
-    public Guid Clienteid { get; set; }
+    
+    public Guid id { get; set; }
     public string username { get; set; }
 }
