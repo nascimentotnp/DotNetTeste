@@ -37,6 +37,37 @@ public class ClienteDataAccess
         }
         return allNotes;
     }
+    public static List<Cliente> GetOneCliente(Guid id)
+    {
+        List<Cliente> allNotes = new List<Cliente>();
+        MySqlConnection con = new MySqlConnection(conString);
+
+        try
+        {
+            string query = $"select * from clientes where clienteid ='{id}'";
+            DataSet ds = new DataSet();
+            MySqlCommand cmd = new MySqlCommand(query, con);
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            da.Fill(ds);
+
+            DataTable dt = ds.Tables[0];
+            DataRowCollection rows = dt.Rows;
+            foreach (DataRow row in rows)
+            {
+                Cliente Cliente = new Cliente
+                {
+                    id = Guid.Parse(row["clienteid"].ToString()),      
+                    username = row["username"].ToString(),
+                };
+                allNotes.Add(Cliente);
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+        return allNotes;
+    }
     public static void SaveNewCliente(Cliente cliente)
     {
         MySqlConnection con = new MySqlConnection(conString);

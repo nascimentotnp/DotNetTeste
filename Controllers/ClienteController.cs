@@ -23,6 +23,15 @@ public class ClienteController : ControllerBase
         List<Cliente> Cliente = ClienteDataAccess.GetAllCliente();
         return Cliente;
     }
+    
+    [Route("{id}")]
+    [HttpGet]
+    [EnableCors()]
+    public IEnumerable<Cliente> GetOneCliente(Guid id)
+    {
+        List<Cliente> Cliente = ClienteDataAccess.GetOneCliente(id);
+        return Cliente;
+    }
 
     [HttpPost]
     [EnableCors()]
