@@ -86,7 +86,3 @@ C:\Users\nasci\DotNetTestetec\obj\Debug\net7.0\refint\DotNetTestetec.dll
 C:\Users\nasci\DotNetTestetec\obj\Debug\net7.0\DotNetTestetec.pdb
 C:\Users\nasci\DotNetTestetec\obj\Debug\net7.0\DotNetTestetec.genruntimeconfig.cache
 C:\Users\nasci\DotNetTestetec\obj\Debug\net7.0\ref\DotNetTestetec.dll
-C:\Users\nasci\DotNetTestetec\bin\Debug\net7.0\nextjs-crud\.eslintrc.json
-C:\Users\nasci\DotNetTestetec\bin\Debug\net7.0\nextjs-crud\jsconfig.json
-C:\Users\nasci\DotNetTestetec\bin\Debug\net7.0\nextjs-crud\package-lock.json
-C:\Users\nasci\DotNetTestetec\bin\Debug\net7.0\nextjs-crud\package.json

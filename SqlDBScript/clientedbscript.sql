@@ -1,10 +1,11 @@
 DROP DATABASE IF EXISTS clientes;
 create database testefullstack;
 use cliente;
+DROP TABLE clientes;
 CREATE TABLE clientes (clienteid CHAR(36) primary key NOT NULL ,
-                       username VARCHAR(50));
+                       username VARCHAR(50) NOT NULL, fone VARCHAR(20) ,email VARCHAR(50));
 
-INSERT INTO clientes (clienteid, username) VALUES ('6fbb1d94-7d45-4f07-bf18-74b5a7a8cfce', 'Exemplo4');
+INSERT INTO clientes (username, fone, email) VALUES ('Thiago', '992629982', 'nascimentotnp@gmail.com');
 
 
 select * from clientes;

@@ -27,6 +27,9 @@ public class ClienteDataAccess
                 {
                     id = Guid.Parse(row["clienteid"].ToString()),      
                     username = row["username"].ToString(),
+                    email = row["email"].ToString(),
+                    phone = row["fone"].ToString(),
+
                 };
                 allNotes.Add(Cliente);
             }
@@ -58,6 +61,8 @@ public class ClienteDataAccess
                 {
                     id = Guid.Parse(row["clienteid"].ToString()),      
                     username = row["username"].ToString(),
+                    email = row["email"].ToString(),
+                    phone = row["fone"].ToString(),
                 };
                 allNotes.Add(Cliente);
             }
@@ -78,7 +83,8 @@ public class ClienteDataAccess
 
             Guid novoClienteId = Guid.NewGuid();
 
-            string insertQuery = $"insert into clientes(clienteid, username) values('{novoClienteId}', '{cliente.username}')";
+            string insertQuery = $"insert into clientes(clienteid, username, fone, email) values('{novoClienteId}'," +
+                                 $"'{cliente.username}','{cliente.phone}','{cliente.email}')";
             MySqlCommand insertCommand = new MySqlCommand(insertQuery, con);
             insertCommand.ExecuteNonQuery();
         }
@@ -119,8 +125,47 @@ public class ClienteDataAccess
         try
         {
             con.Open();
-            string query = $"update clientes set username='{cliente.username}' where clienteid='{id}'";
+        
+            string query = "update clientes set ";
+            List<string> updateFields = new List<string>();
+        
+            if (!string.IsNullOrEmpty(cliente.username))
+            {
+                updateFields.Add($"username=@Username");
+            }
+
+            if (!string.IsNullOrEmpty(cliente.email))
+            {
+                updateFields.Add($"email=@Email");
+            }
+
+            if (!string.IsNullOrEmpty(cliente.phone))
+            {
+                updateFields.Add($"fone=@Phone");
+            }
+
+            query += string.Join(", ", updateFields);
+            query += $" where clienteid=@Id";
+        
             MySqlCommand command = new MySqlCommand(query, con);
+
+            command.Parameters.AddWithValue("@Id", id);
+        
+            if (!string.IsNullOrEmpty(cliente.username))
+            {
+                command.Parameters.AddWithValue("@Username", cliente.username);
+            }
+
+            if (!string.IsNullOrEmpty(cliente.email))
+            {
+                command.Parameters.AddWithValue("@Email", cliente.email);
+            }
+
+            if (!string.IsNullOrEmpty(cliente.phone))
+            {
+                command.Parameters.AddWithValue("@Phone", cliente.phone);
+            }
+
             command.ExecuteNonQuery();
         }
         catch (Exception e)
@@ -132,4 +177,5 @@ public class ClienteDataAccess
             con.Close();
         }
     }
+
 }
